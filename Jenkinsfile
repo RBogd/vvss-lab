@@ -14,12 +14,16 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'mvn clean install -DskipTests'
+                dir('src') {
+                    sh 'mvn clean install -DskipTests'
+                }
             }
         }
         stage('Run a Test') {
             steps {
-                sh 'mvn -Dtest=AppTest,AppTestWBT verify'
+                dir('src') {
+                    sh 'mvn -Dtest=AppTest,AppTestWBT verify'
+                }
             }
         }
         stage('Publish Allure Report') {
