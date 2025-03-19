@@ -14,14 +14,14 @@ pipeline {
         }
         stage('Build') {
             steps {
-                dir('src') {
+                dir('') {
                     sh 'mvn clean install -DskipTests'
                 }
             }
         }
         stage('Run a Test') {
             steps {
-                dir('src') {
+                dir('') {
                     sh 'mvn -Dtest=StudentsTest verify'
                 }
             }
