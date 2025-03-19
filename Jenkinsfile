@@ -22,7 +22,7 @@ pipeline {
         stage('Run a Test') {
             steps {
                 dir('src') {
-                    sh 'mvn -Dtest=AppTest,AppTestWBT verify'
+                    sh 'mvn -Dtest=StudentsTest verify'
                 }
             }
         }
