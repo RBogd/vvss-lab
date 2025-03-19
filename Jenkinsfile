@@ -8,7 +8,7 @@ pipeline {
         }
         stage('Clone the repository') {
             steps {
-                git branch: 'master', url: 'http://gitea:3000/admin/RepoDemoL02TestingBBT.git'
+                git branch: 'master', url: 'http://gitea:3000/admin/project.git'
                 sh 'tree'
             }
         }
