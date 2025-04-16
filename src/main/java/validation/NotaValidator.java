@@ -3,10 +3,10 @@ import domain.Nota;
 
 public class NotaValidator implements Validator<Nota> {
     public void validate(Nota nota) throws ValidationException {
-        if (nota.getID().getObject1() == null || nota.getID().equals("")) {
+        if (nota.getIdStudent() == null || nota.getID().equals("")) {
             throw new ValidationException("ID Student invalid! \n");
         }
-        if (nota.getID().getObject2() == null || nota.getID().equals("")) {
+        if (nota.getIdTema() == null || nota.getID().equals("")) {
             throw new ValidationException("ID Tema invalid! \n");
         }
         if (nota.getNota() < 0 || nota.getNota() > 10) {

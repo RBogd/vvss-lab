@@ -13,7 +13,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class NotaXMLRepository extends AbstractXMLRepository<Pair<String, String>, Nota> {
+public class NotaXMLRepository extends AbstractXMLRepository<String, Nota> {
 
     public NotaXMLRepository(Validator<Nota> validator, String XMLfilename) {
         super(validator, XMLfilename);
@@ -22,8 +22,8 @@ public class NotaXMLRepository extends AbstractXMLRepository<Pair<String, String
 
     protected Element getElementFromEntity(Nota nota, Document XMLdocument) {
         Element element = XMLdocument.createElement("nota");
-        element.setAttribute("IDStudent", nota.getID().getObject1());
-        element.setAttribute("IDTema", nota.getID().getObject2());
+        element.setAttribute("IDStudent", nota.getIdStudent());
+        element.setAttribute("IDTema", nota.getIdTema());
 
         element.appendChild(createElement(XMLdocument, "Nota", String.valueOf(nota.getNota())));
         element.appendChild(createElement(XMLdocument, "SaptamanaPredare", String.valueOf(nota.getSaptamanaPredare())));
@@ -38,12 +38,12 @@ public class NotaXMLRepository extends AbstractXMLRepository<Pair<String, String
         double nota = Double.parseDouble(node.getElementsByTagName("Nota").item(0).getTextContent());
         int saptamanaPredare = Integer.parseInt(node.getElementsByTagName("SaptamanaPredare").item(0).getTextContent());
         String feedback = node.getElementsByTagName("Feedback").item(0).getTextContent();
-
-        return new Nota(new Pair(IDStudent, IDTema), nota, saptamanaPredare, feedback);
+        String idNota = IDStudent + "#" + IDTema;
+        return new Nota(idNota, nota, saptamanaPredare, feedback, IDStudent, IDTema);
     }
 
     public void createFile(Nota notaObj) {
-        String idStudent = notaObj.getID().getObject1();
+        String idStudent = notaObj.getIdStudent();
         StudentValidator sval = new StudentValidator();
         TemaValidator tval = new TemaValidator();
         StudentFileRepository srepo = new StudentFileRepository(sval, "studenti.txt");
@@ -52,12 +52,12 @@ public class NotaXMLRepository extends AbstractXMLRepository<Pair<String, String
         Student student = srepo.findOne(idStudent);
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(student.getNume() + ".txt", false))) {
             super.findAll().forEach(nota -> {
-                if (nota.getID().getObject1().equals(idStudent)) {
+                if (nota.getIdStudent().equals(idStudent)) {
                     try {
-                        bw.write("Tema: " + nota.getID().getObject2() + "\n");
+                        bw.write("Tema: " + nota.getIdTema() + "\n");
                         bw.write("Nota: " + nota.getNota() + "\n");
                         bw.write("Predata in saptamana: " + nota.getSaptamanaPredare() + "\n");
-                        bw.write("Deadline: " + trepo.findOne(nota.getID().getObject2()).getDeadline() + "\n");
+                        bw.write("Deadline: " + trepo.findOne(nota.getIdTema()).getDeadline() + "\n");
                         bw.write("Feedback: " + nota.getFeedback() + "\n\n");
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -70,7 +70,7 @@ public class NotaXMLRepository extends AbstractXMLRepository<Pair<String, String
     }
 }
 //    public void createFile(Nota notaObj) {
-//        String idStudent = notaObj.getID().getObject1();
+//        String idStudent = notaObj.getIdStudent();
 //        StudentValidator sval = new StudentValidator();
 //        TemaValidator tval = new TemaValidator();
 //        StudentXMLRepository srepo = new StudentXMLRepository(sval, "studenti.xml");
@@ -83,7 +83,7 @@ public class NotaXMLRepository extends AbstractXMLRepository<Pair<String, String
 //            XMLdocument.appendChild(root);
 //
 //            super.findAll().forEach(nota -> {
-//                if (nota.getID().getObject1().equals(idStudent)) {
+//                if (nota.getIdStudent().equals(idStudent)) {
 //                    try {
 //                        Document XMLstudent = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
 //                        Element element = XMLstudent.createElement("nota");

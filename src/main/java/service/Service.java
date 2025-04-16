@@ -59,9 +59,10 @@ public class Service {
             if (predata - deadline > 2) {
                 valNota =  1;
             } else {
-                valNota =  valNota - 2.5 * (predata - deadline);
+                valNota =  valNota - 2.5 * (deadline - predata);
             }
-            Nota nota = new Nota(new Pair(idStudent, idTema), valNota, predata, feedback);
+            String idnota = idStudent + "#"+ idTema;
+            Nota nota = new Nota(idnota, valNota, predata, feedback, idStudent, idTema);
             Nota result = notaXmlRepo.save(nota);
 
             if (result == null) {
@@ -132,7 +133,8 @@ public class Service {
     }
 
     public void createStudentFile(String idStudent, String idTema) {
-        Nota nota = notaXmlRepo.findOne(new Pair(idStudent, idTema));
+        String idNota = idStudent + "#" + idTema;
+        Nota nota = notaXmlRepo.findOne(idNota);
 
         notaXmlRepo.createFile(nota);
     }
