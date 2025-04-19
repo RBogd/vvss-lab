@@ -32,7 +32,6 @@ class GradeIntegrationTest {
 
     @BeforeEach
     void setUp() {
-        // Initialize test files
         initializeTestFile("test_studenti.xml");
         initializeTestFile("test_teme.xml");
         initializeTestFile("test_note.xml");
@@ -49,7 +48,6 @@ class GradeIntegrationTest {
 
     @AfterEach
     void tearDown() {
-        // Clean up test files
         deleteTestFile("test_studenti.xml");
         deleteTestFile("test_teme.xml");
         deleteTestFile("test_note.xml");
@@ -76,18 +74,14 @@ class GradeIntegrationTest {
         }
     }
 
-    // Unit test for addStudent
     @Test
     void testAddStudent() {
-        // Arrange
         String id = "1";
-        String nume = "John Doe";
+        String nume = "Andrei";
         int grupa = 221;
 
-        // Act
         int result = service.saveStudent(id, nume, grupa);
 
-        // Assert
         assertEquals(1, result, "Should return 1 for successful student addition");
         Student savedStudent = studentRepo.findOne(id);
         assertNotNull(savedStudent, "Student should exist in repository");
@@ -124,31 +118,31 @@ class GradeIntegrationTest {
         String studentId = "1";
         String temaId = "1";
         double nota = 9;
-        int predata = 6;
+        int predata = 8;
+        int deadline = 7;
         String feedback = "Good work";
 
-        service.saveStudent(studentId, "John Doe", 221);
-        service.saveTema(temaId, "Assignment 1", 7, 1);
+        service.saveStudent(studentId, "Bogdan", 221);
+        service.saveTema(temaId, "Assignment 1", deadline, 1);
 
 
         int result = service.saveNota(studentId, temaId, nota, predata, feedback);
+        double expectedNota = Math.max(1.0, nota - ((predata - deadline) * 2.5));
 
         assertEquals(1, result, "Should return 1 for successful grade addition");
         String idnota = studentId + "#" + temaId;
         Nota savedNota = notaRepo.findOne(idnota);
         assertNotNull(savedNota, "Grade should exist in repository");
-        assertEquals(nota, savedNota.getNota(), "Grade value should match");
+        assertEquals(expectedNota, savedNota.getNota(), "Grade value should match");
         assertEquals(predata, savedNota.getSaptamanaPredare(), "Submission week should match");
         assertEquals(feedback, savedNota.getFeedback(), "Feedback should match");
     }
 
-    // Integration test for the complete flow
     @Test
     void testCompleteGradeFlow() {
-        // Arrange
         String studentId = "1";
         String temaId = "1";
-        String studentName = "John Doe";
+        String studentName = "Mircea";
         int grupa = 221;
         String descriere = "Assignment 1";
         int deadline = 7;
@@ -157,19 +151,18 @@ class GradeIntegrationTest {
         int predata = 6;
         String feedback = "Good work";
 
-        // Act - Add student
         int studentResult = service.saveStudent(studentId, studentName, grupa);
         assertEquals(1, studentResult, "Student should be added successfully");
 
-        // Act - Add assignment
+
         int temaResult = service.saveTema(temaId, descriere, deadline, startline);
         assertEquals(1, temaResult, "Assignment should be added successfully");
 
-        // Act - Add grade
+
         int notaResult = service.saveNota(studentId, temaId, nota, predata, feedback);
         assertEquals(1, notaResult, "Grade should be added successfully");
 
-        // Assert - Verify all entities exist and have correct values
+
         Student savedStudent = studentRepo.findOne(studentId);
         assertNotNull(savedStudent, "Student should exist");
         assertEquals(studentName, savedStudent.getNume(), "Student name should match");

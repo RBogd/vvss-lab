@@ -56,11 +56,15 @@ public class Service {
         else {
             int deadline = temaXmlRepo.findOne(idTema).getDeadline();
 
-            if (predata - deadline > 2) {
-                valNota =  1;
-            } else {
-                valNota =  valNota - 2.5 * (deadline - predata);
+            if(predata>deadline) {
+                if (predata - deadline > 2) {
+                    valNota = 1;
+                } else {
+                    valNota = valNota - 2.5 * (predata - deadline);
+                }
             }
+
+
             String idnota = idStudent + "#"+ idTema;
             Nota nota = new Nota(idnota, valNota, predata, feedback, idStudent, idTema);
             Nota result = notaXmlRepo.save(nota);
