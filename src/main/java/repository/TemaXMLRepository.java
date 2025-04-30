@@ -29,6 +29,6 @@ public class TemaXMLRepository extends AbstractXMLRepository<String, Tema> {
         int deadline = Integer.parseInt(node.getElementsByTagName("Deadline").item(0).getTextContent());
         int startline = Integer.parseInt(node.getElementsByTagName("Startline").item(0).getTextContent());
 
-        return new Tema(ID, descriere, deadline, startline);
+        return new Tema(ID, descriere, startline, deadline);
     }
 }

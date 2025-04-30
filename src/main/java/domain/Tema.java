@@ -8,7 +8,7 @@ public class Tema implements HasID<String> {
     private int deadline;
     private int startline;
 
-    public Tema(String idTema, String descriere, int deadline, int startline) {
+    public Tema(String idTema, String descriere, int startline, int deadline) {
         this.idTema = idTema;
         this.descriere = descriere;
         this.deadline = deadline;
