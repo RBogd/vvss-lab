@@ -1,7 +1,6 @@
 package repository;
 
 import domain.Nota;
-import domain.Pair;
 import validation.ValidationException;
 import validation.Validator;
 

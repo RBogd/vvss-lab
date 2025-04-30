@@ -1,7 +1,6 @@
 package repository;
 
 import domain.Nota;
-import domain.Pair;
 import domain.Student;
 import validation.StudentValidator;
 import validation.TemaValidator;
