@@ -31,7 +31,7 @@ public class NotaXMLRepository extends AbstractXMLRepository<String, Nota> {
         return element;
     }
 
-    protected Nota getEntityFromNode(Element node) {
+    protected Nota getEntityFromElement(Element node) {
         String IDStudent = node.getAttributeNode("IDStudent").getValue();
         String IDTema= node.getAttributeNode("IDTema").getValue();
         double nota = Double.parseDouble(node.getElementsByTagName("Nota").item(0).getTextContent());

@@ -23,7 +23,7 @@ public class TemaXMLRepository extends AbstractXMLRepository<String, Tema> {
         return element;
     }
 
-    protected Tema getEntityFromNode(Element node) {
+    protected Tema getEntityFromElement(Element node) {
         String ID = node.getAttributeNode("ID").getValue();
         String descriere = node.getElementsByTagName("Descriere").item(0).getTextContent();
         int deadline = Integer.parseInt(node.getElementsByTagName("Deadline").item(0).getTextContent());
