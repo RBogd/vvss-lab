@@ -8,7 +8,7 @@ pipeline {
         }
         stage('Clone the repository') {
             steps {
-                git branch: 'master', url: 'http://gitea:3000/admin/project.git'
+                git branch: 'master', url: 'http://gitea:3000/admin/repo-raul.git'
                 sh 'tree'
             }
         }
@@ -22,7 +22,7 @@ pipeline {
         stage('Run a Test') {
             steps {
                 dir('') {
-                    sh 'mvn -Dtest=StudentsTest verify'
+                    sh 'mvn verify'
                 }
             }
         }
