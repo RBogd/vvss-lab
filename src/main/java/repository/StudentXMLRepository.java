@@ -1,12 +1,13 @@
 package repository;
 import domain.Student;
+import validation.StudentValidator;
 import validation.Validator;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 public class StudentXMLRepository extends AbstractXMLRepository<String, Student> {
 
-    public StudentXMLRepository(Validator<Student> validator, String XMLfilename) {
+    public StudentXMLRepository(StudentValidator validator, String XMLfilename) {
         super(validator, XMLfilename);
         loadFromXmlFile();
     }

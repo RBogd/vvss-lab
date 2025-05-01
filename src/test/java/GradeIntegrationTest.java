@@ -26,9 +26,6 @@ class GradeIntegrationTest {
     protected StudentXMLRepository studentRepo;
     protected TemaXMLRepository temaRepo;
     protected NotaXMLRepository notaRepo;
-    protected StudentValidator studentValidator;
-    protected TemaValidator temaValidator;
-    protected NotaValidator notaValidator;
 
     @BeforeEach
     void setUp() {
@@ -36,9 +33,9 @@ class GradeIntegrationTest {
         initializeTestFile("test_teme.xml");
         initializeTestFile("test_note.xml");
 
-        studentValidator = new StudentValidator();
-        temaValidator = new TemaValidator();
-        notaValidator = new NotaValidator();
+        StudentValidator studentValidator = new StudentValidator();
+        TemaValidator temaValidator = new TemaValidator();
+        NotaValidator notaValidator = new NotaValidator();
 
         studentRepo = new StudentXMLRepository(studentValidator, "test_studenti.xml");
         temaRepo = new TemaXMLRepository(temaValidator, "test_teme.xml");

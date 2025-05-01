@@ -1,13 +1,14 @@
 package repository;
 
 import domain.Tema;
+import validation.TemaValidator;
 import validation.Validator;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 public class TemaXMLRepository extends AbstractXMLRepository<String, Tema> {
 
-    public TemaXMLRepository(Validator<Tema> validator, String XMLfilename) {
+    public TemaXMLRepository(TemaValidator validator, String XMLfilename) {
         super(validator, XMLfilename);
         loadFromXmlFile();
     }

@@ -34,7 +34,7 @@ public class NotaFileRepository extends AbstractFileRepository<String, Nota> {
 
     protected void writeToFile(Nota nota) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename, true))) {
-            bw.write(nota.getIdStudent() + "#" + nota.getIdTema() + "#" + nota.getNota() + "#"
+            bw.write(nota.getIdStudent() + "#" + nota.getID() + "#" + nota.getNota() + "#"
                     + nota.getSaptamanaPredare() + "#" + nota.getFeedback() + "\n");
         } catch (IOException ioe) {
             ioe.printStackTrace();
@@ -45,7 +45,7 @@ public class NotaFileRepository extends AbstractFileRepository<String, Nota> {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename, false))) {
             super.entities.values().forEach(nota -> {
                 try {
-                    bw.write(nota.getIdStudent() + "#" + nota.getIdTema() + "#" + nota.getNota()
+                    bw.write(nota.getIdStudent() + "#" + nota.getID() + "#" + nota.getNota()
                             + "#" + nota.getSaptamanaPredare() + "#" + nota.getFeedback() + "\n");
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -68,10 +68,10 @@ public class NotaFileRepository extends AbstractFileRepository<String, Nota> {
 //            super.findAll().forEach(nota -> {
 //                if (nota.getIdStudent().equals(idStudent)) {
 //                    try {
-//                        bw.write("Tema: " + nota.getIdTema() + "\n");
+//                        bw.write("Tema: " + nota.getID() + "\n");
 //                        bw.write("Nota: " + nota.getNota() + "\n");
 //                        bw.write("Predata in saptamana: " + nota.getSaptamanaPredare() + "\n");
-//                        bw.write("Deadline: " + trepo.findOne(nota.getIdTema()).getDeadline() + "\n");
+//                        bw.write("Deadline: " + trepo.findOne(nota.getID()).getDeadline() + "\n");
 //                        bw.write("Feedback: " + nota.getFeedback() + "\n\n");
 //                    } catch (IOException e) {
 //                        e.printStackTrace();
