@@ -26,9 +26,6 @@ class GradeIntegrationTest {
     private StudentXMLRepository studentRepo;
     private TemaXMLRepository temaRepo;
     private NotaXMLRepository notaRepo;
-    private Validator<Student> studentValidator;
-    private Validator<Tema> temaValidator;
-    private Validator<Nota> notaValidator;
 
     @BeforeEach
     void setUp() {
@@ -36,9 +33,9 @@ class GradeIntegrationTest {
         initializeTestFile("test_teme.xml");
         initializeTestFile("test_note.xml");
 
-        studentValidator = new StudentValidator();
-        temaValidator = new TemaValidator();
-        notaValidator = new NotaValidator();
+        StudentValidator studentValidator = new StudentValidator();
+        TemaValidator temaValidator = new TemaValidator();
+        NotaValidator notaValidator = new NotaValidator();
 
         studentRepo = new StudentXMLRepository(studentValidator, "test_studenti.xml");
         temaRepo = new TemaXMLRepository(temaValidator, "test_teme.xml");
@@ -67,10 +64,13 @@ class GradeIntegrationTest {
         }
     }
 
+
     private void deleteTestFile(String filename) {
         File file = new File(filename);
         if (file.exists()) {
-            file.delete();
+            if (!file.delete()) {
+                System.out.println("N-am putut sa stergem fisieru : " + filename);
+            }
         }
     }
 
@@ -100,8 +100,7 @@ class GradeIntegrationTest {
         int startline = 1;
 
 
-        int result = service.saveTema(id, descriere, deadline, startline);
-
+        int result = service.saveTema(id, descriere, startline, deadline);
 
         assertEquals(1, result, "Should return 1 for successful assignment addition");
         Tema savedTema = temaRepo.findOne(id);
@@ -123,7 +122,7 @@ class GradeIntegrationTest {
         String feedback = "Good work";
 
         service.saveStudent(studentId, "Bogdan", 221);
-        service.saveTema(temaId, "Assignment 1", deadline, 1);
+        service.saveTema(temaId, "Assignment 1", 1, deadline);
 
 
         int result = service.saveNota(studentId, temaId, nota, predata, feedback);
@@ -155,7 +154,7 @@ class GradeIntegrationTest {
         assertEquals(1, studentResult, "Student should be added successfully");
 
 
-        int temaResult = service.saveTema(temaId, descriere, deadline, startline);
+        int temaResult = service.saveTema(temaId, descriere, startline, deadline);
         assertEquals(1, temaResult, "Assignment should be added successfully");
 
 

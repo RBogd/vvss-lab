@@ -1,7 +1,6 @@
 package service;
 
 import domain.Nota;
-import domain.Pair;
 import domain.Student;
 import domain.Tema;
 import repository.NotaXMLRepository;
@@ -33,17 +32,17 @@ public class Service {
         Student student = new Student(id, nume, grupa);
         Student result = studentXmlRepo.save(student);
 
-        if (result == null) {
+        if (result != null) {
             return 1;
         }
         return 0;
     }
 
-    public int saveTema(String id, String descriere, int deadline, int startline) {
-        Tema tema = new Tema(id, descriere, deadline, startline);
+    public int saveTema(String id, String descriere, int startline, int deadline) {
+        Tema tema = new Tema(id, descriere, startline, deadline);
         Tema result = temaXmlRepo.save(tema);
 
-        if (result == null) {
+        if (result != null) {
             return 1;
         }
         return 0;
@@ -60,7 +59,7 @@ public class Service {
                 if (predata - deadline > 2) {
                     valNota = 1;
                 } else {
-                    valNota = valNota - 2.5 * (predata - deadline);
+                    valNota -= 2.5 * (predata - deadline);
                 }
             }
 
@@ -69,7 +68,7 @@ public class Service {
             Nota nota = new Nota(idnota, valNota, predata, feedback, idStudent, idTema);
             Nota result = notaXmlRepo.save(nota);
 
-            if (result == null) {
+            if (result != null) {
                 return 1;
             }
             return 0;
@@ -105,7 +104,7 @@ public class Service {
     }
 
     public int updateTema(String id, String descriereNoua, int deadlineNou, int startlineNou) {
-        Tema temaNoua = new Tema(id, descriereNoua, deadlineNou, startlineNou);
+        Tema temaNoua = new Tema(id, descriereNoua, startlineNou, deadlineNou);
         Tema result = temaXmlRepo.update(temaNoua);
 
         if (result == null) {

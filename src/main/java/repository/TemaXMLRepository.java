@@ -1,13 +1,14 @@
 package repository;
 
 import domain.Tema;
+import validation.TemaValidator;
 import validation.Validator;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 public class TemaXMLRepository extends AbstractXMLRepository<String, Tema> {
 
-    public TemaXMLRepository(Validator<Tema> validator, String XMLfilename) {
+    public TemaXMLRepository(TemaValidator validator, String XMLfilename) {
         super(validator, XMLfilename);
         loadFromXmlFile();
     }
@@ -23,12 +24,12 @@ public class TemaXMLRepository extends AbstractXMLRepository<String, Tema> {
         return element;
     }
 
-    protected Tema getEntityFromNode(Element node) {
+    protected Tema getEntityFromElement(Element node) {
         String ID = node.getAttributeNode("ID").getValue();
         String descriere = node.getElementsByTagName("Descriere").item(0).getTextContent();
         int deadline = Integer.parseInt(node.getElementsByTagName("Deadline").item(0).getTextContent());
         int startline = Integer.parseInt(node.getElementsByTagName("Startline").item(0).getTextContent());
 
-        return new Tema(ID, descriere, deadline, startline);
+        return new Tema(ID, descriere, startline, deadline);
     }
 }

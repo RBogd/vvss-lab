@@ -5,6 +5,7 @@ import validation.Validator;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public abstract class AbstractCRUDRepository<ID, E extends HasID<ID>> implements CRUDRepository<ID, E>{
     Map<ID, E> entities;
@@ -32,10 +33,11 @@ public abstract class AbstractCRUDRepository<ID, E extends HasID<ID>> implements
     public E save(E entity) throws ValidationException {
         try {
             validator.validate(entity);
-            return entities.putIfAbsent(entity.getID(), entity);
+            E Previous =  entities.putIfAbsent(entity.getID(), entity);
+            return Objects.requireNonNullElse(Previous, entity);
         }
         catch (ValidationException ve) {
-            System.out.println("Entitatea nu este valida! \n");
+            System.out.println(ve.getMessage());
             return null;
         }
     }

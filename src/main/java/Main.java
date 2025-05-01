@@ -13,9 +13,9 @@ import validation.Validator;
 
 public class Main {
     public static void main(String[] args) {
-        Validator<Student> studentValidator = new StudentValidator();
-        Validator<Tema> temaValidator = new TemaValidator();
-        Validator<Nota> notaValidator = new NotaValidator();
+        StudentValidator studentValidator = new StudentValidator();
+        TemaValidator temaValidator = new TemaValidator();
+        NotaValidator notaValidator = new NotaValidator();
 
         StudentXMLRepository fileRepository1 = new StudentXMLRepository(studentValidator, "studenti.xml");
         TemaXMLRepository fileRepository2 = new TemaXMLRepository(temaValidator, "teme.xml");

@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class StudentsTest {
     private Service service;
     private StudentXMLRepository studentRepo;
-    private Validator<Student> studentValidator;
+    private StudentValidator studentValidator;
 
     @BeforeEach
     void setUp() {
@@ -28,7 +28,7 @@ class StudentsTest {
         String nume = "Bogdan";
         int grupa = 832;
         int result = service.saveStudent(id, nume, grupa);
-        assertEquals(0, result, "Should return 0 for successful student addition");
+        assertEquals(1, result, "Should return 1 for successful student addition");
         Student savedStudent = studentRepo.findOne(id);
         assertNotNull(savedStudent, "Student should exist in repository");
         assertEquals(id, savedStudent.getID(), "Student ID should match");
@@ -42,7 +42,7 @@ class StudentsTest {
         String nume = "Andrei";
         int grupa = 832;
         int result = service.saveStudent(id, nume, grupa);
-        assertEquals(1, result, "Should return 1 for invalid student");
+        assertEquals(0, result, "Should return 0 for invalid student");
         Student savedStudent = studentRepo.findOne(id);
         assertNull(savedStudent, "Invalid student should not exist in repository");
     }

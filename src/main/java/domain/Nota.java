@@ -51,11 +51,6 @@ public class Nota implements HasID<String> {
         this.feedback = feedback;
     }
 
-
-    public String getIdTema() {
-        return idTema;
-    }
-
     public void setIdTema(String idTema) {
         this.idTema = idTema;
     }
