@@ -22,10 +22,10 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.*;
 
 class GradeIntegrationTest {
-    protected Service service;
-    protected StudentXMLRepository studentRepo;
-    protected TemaXMLRepository temaRepo;
-    protected NotaXMLRepository notaRepo;
+    private Service service;
+    private StudentXMLRepository studentRepo;
+    private TemaXMLRepository temaRepo;
+    private NotaXMLRepository notaRepo;
 
     @BeforeEach
     void setUp() {
@@ -65,7 +65,7 @@ class GradeIntegrationTest {
     }
 
 
-    protected void deleteTestFile(String filename) {
+    private void deleteTestFile(String filename) {
         File file = new File(filename);
         if (file.exists()) {
             if (!file.delete()) {
