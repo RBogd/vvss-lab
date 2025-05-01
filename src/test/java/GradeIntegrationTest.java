@@ -22,13 +22,10 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.*;
 
 class GradeIntegrationTest {
-    private Service service;
-    private StudentXMLRepository studentRepo;
-    private TemaXMLRepository temaRepo;
-    private NotaXMLRepository notaRepo;
-    private Validator<Student> studentValidator;
-    private Validator<Tema> temaValidator;
-    private Validator<Nota> notaValidator;
+    protected Service service;
+    protected StudentXMLRepository studentRepo;
+    protected TemaXMLRepository temaRepo;
+    protected NotaXMLRepository notaRepo;
 
     @BeforeEach
     void setUp() {
@@ -36,9 +33,9 @@ class GradeIntegrationTest {
         initializeTestFile("test_teme.xml");
         initializeTestFile("test_note.xml");
 
-        studentValidator = new StudentValidator();
-        temaValidator = new TemaValidator();
-        notaValidator = new NotaValidator();
+        StudentValidator studentValidator = new StudentValidator();
+        TemaValidator temaValidator = new TemaValidator();
+        NotaValidator notaValidator = new NotaValidator();
 
         studentRepo = new StudentXMLRepository(studentValidator, "test_studenti.xml");
         temaRepo = new TemaXMLRepository(temaValidator, "test_teme.xml");
@@ -67,10 +64,11 @@ class GradeIntegrationTest {
         }
     }
 
-    private void deleteTestFile(String filename) {
+
+    protected void deleteTestFile(String filename) {
         File file = new File(filename);
         if (file.exists()) {
-            if (! file.delete()) {
+            if (!file.delete()) {
                 System.out.println("N-am putut sa stergem fisieru : " + filename);
             }
         }

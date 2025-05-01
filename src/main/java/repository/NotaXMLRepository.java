@@ -1,11 +1,10 @@
 package repository;
 
 import domain.Nota;
-import domain.Pair;
 import domain.Student;
+import validation.NotaValidator;
 import validation.StudentValidator;
 import validation.TemaValidator;
-import validation.Validator;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -15,7 +14,7 @@ import java.io.IOException;
 
 public class NotaXMLRepository extends AbstractXMLRepository<String, Nota> {
 
-    public NotaXMLRepository(Validator<Nota> validator, String XMLfilename) {
+    public NotaXMLRepository(NotaValidator validator, String XMLfilename) {
         super(validator, XMLfilename);
         loadFromXmlFile();
     }
@@ -23,7 +22,7 @@ public class NotaXMLRepository extends AbstractXMLRepository<String, Nota> {
     protected Element getElementFromEntity(Nota nota, Document XMLdocument) {
         Element element = XMLdocument.createElement("nota");
         element.setAttribute("IDStudent", nota.getIdStudent());
-        element.setAttribute("IDTema", nota.getIdTema());
+        element.setAttribute("IDTema", nota.getID());
 
         element.appendChild(createElement(XMLdocument, "Nota", String.valueOf(nota.getNota())));
         element.appendChild(createElement(XMLdocument, "SaptamanaPredare", String.valueOf(nota.getSaptamanaPredare())));
@@ -32,7 +31,7 @@ public class NotaXMLRepository extends AbstractXMLRepository<String, Nota> {
         return element;
     }
 
-    protected Nota getEntityFromNode(Element node) {
+    protected Nota getEntityFromElement(Element node) {
         String IDStudent = node.getAttributeNode("IDStudent").getValue();
         String IDTema= node.getAttributeNode("IDTema").getValue();
         double nota = Double.parseDouble(node.getElementsByTagName("Nota").item(0).getTextContent());
@@ -54,10 +53,10 @@ public class NotaXMLRepository extends AbstractXMLRepository<String, Nota> {
             super.findAll().forEach(nota -> {
                 if (nota.getIdStudent().equals(idStudent)) {
                     try {
-                        bw.write("Tema: " + nota.getIdTema() + "\n");
+                        bw.write("Tema: " + nota.getID() + "\n");
                         bw.write("Nota: " + nota.getNota() + "\n");
                         bw.write("Predata in saptamana: " + nota.getSaptamanaPredare() + "\n");
-                        bw.write("Deadline: " + trepo.findOne(nota.getIdTema()).getDeadline() + "\n");
+                        bw.write("Deadline: " + trepo.findOne(nota.getID()).getDeadline() + "\n");
                         bw.write("Feedback: " + nota.getFeedback() + "\n\n");
                     } catch (IOException e) {
                         e.printStackTrace();

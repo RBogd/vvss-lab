@@ -24,7 +24,7 @@ public abstract class AbstractXMLRepository<ID, E extends HasID<ID>> extends Abs
         this.XMLfilename = XMLfilename;
     }
 
-    protected abstract E getEntityFromNode(Element node);
+    protected abstract E getEntityFromElement(Element node);
     protected abstract Element getElementFromEntity(E entity, Document XMLdocument);
 
     protected void loadFromXmlFile() {
@@ -37,7 +37,7 @@ public abstract class AbstractXMLRepository<ID, E extends HasID<ID>> extends Abs
                 Node node = list.item(i);
                 if (node.getNodeType() == Element.ELEMENT_NODE) {
                     try {
-                        super.save(getEntityFromNode((Element)node));
+                        super.save(getEntityFromElement((Element)node));
                     }
                     catch(ValidationException ve) {
                         ve.printStackTrace();
