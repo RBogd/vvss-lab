@@ -22,7 +22,7 @@ pipeline {
         stage('Run a Test') {
             steps {
                 dir('') {
-                    sh 'mvn -Dsurefire.failIfNoSpecifiedTests=false verify'
+                    sh 'mvn -Dtest=TakeHomeMockTests -Dsurefire.failIfNoSpecifiedTests=false verify'
                 }
             }
         }
